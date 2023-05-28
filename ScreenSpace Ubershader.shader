@@ -156,7 +156,7 @@ Shader "Leviant's Shaders/ScreenSpace Ubershader v2.8"
 		_OverlayOpaque("Overlay/Opaque", Range(0, 1)) = 0.0
 		_OverlayTransparent("Overlay/Transparent", Range(0, 2)) = 1.0
 		_OverlayRotation("Overlay/Rotation", Float) = 0
-		_OverlayScroll("Overlay/Scroll Vector", Vector) = (0, 1, 0, 0)
+		_OverlayScroll("Overlay/Scroll Vector", Vector) = (0, 0, 0, 0)
 		[Toggle(_)]Overlay_Texture_Sheet("Overlay/Texture sheet enable", Int) = 0
 		
 		_OverlayColumns("Overlay/Columns", Int) = 4
