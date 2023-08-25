@@ -22,3 +22,9 @@ Features
 * VR vignette
 * Distance fading
 * Can be used on Particle System
+
+**setup for vrc** 
+1- create a new sphere
+2- create a new material with this shader
+3- if you only want the vrc camera to see this shader check the box "Camera only"
+4- for a simple texture head to "Overlay/Texture" enable it and select your (render)texture

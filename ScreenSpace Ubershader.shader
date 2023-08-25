@@ -13,6 +13,7 @@ Shader "Leviant's Shaders/ScreenSpace Ubershader v2.8"
 	{
 		//Main Settings
 		[Toggle(_)]Particle_Render("Main/Setup for Particle system", Int) = 0
+		[Toggle(_)]camera_only("Camera only", Int) = 0
 		//Fade Settings
 		_MinRange ("Main/Start fading", Float) = 2.0
 		_MaxRange ("Main/End distance", Float) = 10.0
@@ -155,7 +156,7 @@ Shader "Leviant's Shaders/ScreenSpace Ubershader v2.8"
 		_OverlayOpaque("Overlay/Opaque", Range(0, 1)) = 0.0
 		_OverlayTransparent("Overlay/Transparent", Range(0, 2)) = 1.0
 		_OverlayRotation("Overlay/Rotation", Float) = 0
-		_OverlayScroll("Overlay/Scroll Vector", Vector) = (0, 1, 0, 0)
+		_OverlayScroll("Overlay/Scroll Vector", Vector) = (0, 0, 0, 0)
 		[Toggle(_)]Overlay_Texture_Sheet("Overlay/Texture sheet enable", Int) = 0
 		
 		_OverlayColumns("Overlay/Columns", Int) = 4
@@ -244,6 +245,7 @@ Shader "Leviant's Shaders/ScreenSpace Ubershader v2.8"
 				float3 worldRayDir: TEXCOORD5;
 			};
 			uniform int Particle_Render;
+			uniform int camera_only;
 			uniform int Magnification;
 			uniform int ScreenRotation;
 			uniform int Shake;
@@ -418,6 +420,12 @@ Shader "Leviant's Shaders/ScreenSpace Ubershader v2.8"
 			uniform float _StaticIntensity;
 			uniform float3 _StaticColour;
 
+			float _VRChatCameraMode;
+			float VRCCameraMode()
+            {
+            	return _VRChatCameraMode;
+            }
+
 			bool IsInMirror() //Thanks DocMe ^w^
 			{
 				return unity_CameraProjection[2][0] != 0.0 || unity_CameraProjection[2][1] != 0.0;
@@ -457,6 +465,13 @@ Shader "Leviant's Shaders/ScreenSpace Ubershader v2.8"
 				{
 					o.pos = float4(0, 0, -2, 1);
 					return o;
+				}
+
+                float cameraMode = VRCCameraMode();
+
+				if(camera_only && !(cameraMode == 1 || cameraMode == 2))
+				{
+				    return o;
 				}
 				float4 viewPos2 = viewPos;
 				float4 clipPos = UnityViewToClipPos(viewPos);
